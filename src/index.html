@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script src=/socket.io/socket.io.js></script>
+    <script>
+    var socket = io('http://localhost:3000');
+    socket.on('result', function(child, pai, mae){
+      document.getElementById('crianca').style.backgroundColor = child;
+      document.getElementById('crianca').innerHTML = child;
+      document.getElementById('pai').style.backgroundColor = pai;
+      document.getElementById('pai').innerHTML = pai;
+      document.getElementById('mae').style.backgroundColor = mae;
+      document.getElementById('mae').innerHTML = mae;
+    });
+    socket.on('genetic',function (result) {
+      document.getElementById('geneticResult').innerHTML  = result;
+    });
+
+    function defineThisColor () {
+      socket.emit('color', document.getElementById('cor').value);
+      location.reload();
+    }
+    </script>
+    <style>
+      #main {
+          width: 220px;
+          height: 50px;
+          border: 1px solid black;
+          display: -webkit-flex; /* Safari */
+          display: flex;
+      }
+
+      #main div {
+          -webkit-flex: 1;  /* Safari 6.1+ */
+          -ms-flex: 1;  /* IE 10 */    
+          flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <input type='text' id='cor'></input>
+    <button type="button" onclick="defineThisColor()">Definir Cor</button>
+    <p></p>
+    <div id='main'>
+      <div id="crianca"></div>
+      <p> = </p>
+      <div id="pai"></div>
+      <p> + </p>
+      <div id="mae"></div>
+    </div>
+    <p></p>
+    <div id='geneticResult'></div>
+  </body>
+</html>
